@@ -1,0 +1,161 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Card /> should render the card with tag 1`] = `
+.c0 {
+  background: #FAFAFA;
+  border-radius: 0.8rem;
+  padding: 1.6rem;
+}
+
+.c1 {
+  display: grid;
+  grid-template-areas: 'tag type' 'title .';
+  grid-template-columns: 0.65fr 0.35fr;
+  margin-bottom: 1.6rem;
+  word-break: break-word;
+  grid-row-gap: calc(1.6rem / 2);
+}
+
+.c2 {
+  grid-area: tag;
+}
+
+.c3 {
+  display: -webkit-inline-box;
+  display: -webkit-inline-flex;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  padding: calc(1.6rem / 4);
+  border-radius: calc(0.8rem / 2);
+  text-transform: uppercase;
+  font-weight: 500;
+  font-size: calc(1.6rem - 0.5rem);
+  color: #fa6e88;
+  background: #fef1f5;
+}
+
+.c4 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: end;
+  -webkit-justify-content: flex-end;
+  -ms-flex-pack: end;
+  justify-content: flex-end;
+  grid-area: type;
+}
+
+.c5 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  height: 2.4rem;
+  width: 2.4rem;
+  padding: calc(1.6rem / 4) calc(1.6rem / 2);
+  border-radius: calc(0.8rem / 2);
+  background: #ebeef3;
+}
+
+.c6 {
+  color: #707990;
+  font-weight: 500;
+  line-height: 2.4rem;
+  font-size: 1.2rem;
+}
+
+.c7 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+}
+
+.c8 {
+  color: #707990;
+  font-size: calc(1.2rem - 0.1rem);
+}
+
+.c9 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: end;
+  -webkit-justify-content: flex-end;
+  -ms-flex-pack: end;
+  justify-content: flex-end;
+  border-radius: 0.8rem;
+}
+
+.c9 > img {
+  width: 2.4rem;
+  height: 2.4rem;
+}
+
+<div
+  class="c0"
+>
+  <div
+    class="c1"
+  >
+    <div
+      class="c2"
+    >
+      <span
+        class="c3"
+      >
+        Needs review
+      </span>
+    </div>
+    <div
+      class="c4"
+    >
+      <div
+        class="c5"
+      >
+        T
+      </div>
+    </div>
+    <h3
+      class="c6"
+    >
+      Amending Noxious Weed Seed Rule
+    </h3>
+  </div>
+  <div
+    class="c7"
+  >
+    <p
+      class="c8"
+    >
+      Due Aug 31
+    </p>
+    <div
+      class="c9"
+    >
+      <img
+        alt="Person name"
+        src="/img/icon-192.png"
+      />
+    </div>
+  </div>
+</div>
+`;

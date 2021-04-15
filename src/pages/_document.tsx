@@ -5,10 +5,13 @@ import Document, {
   NextScript,
   DocumentContext
 } from 'next/document'
+import { resetServerContext } from 'react-beautiful-dnd'
 import { ServerStyleSheet } from 'styled-components'
 
 export default class MyDocument extends Document {
   static async getInitialProps(ctx: DocumentContext) {
+    resetServerContext() // necessary to reset server context for RBDND
+
     const sheet = new ServerStyleSheet()
     const originalRenderPage = ctx.renderPage
 
