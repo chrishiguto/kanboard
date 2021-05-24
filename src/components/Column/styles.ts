@@ -1,4 +1,5 @@
 import styled, { css } from 'styled-components'
+import { darken, lighten } from 'polished'
 
 export const Wrapper = styled.div`
   display: flex;
@@ -10,6 +11,7 @@ export const Wrapper = styled.div`
 export const Header = styled.div`
   ${({ theme }) => css`
     display: flex;
+    justify-content: space-between;
 
     margin-bottom: ${theme.spacings.xsmall};
   `}
@@ -29,7 +31,27 @@ export const Content = styled.div`
     background: #e6eef5;
     flex: 1;
 
-    padding: 0 ${theme.spacings.xsmall};
     border-radius: ${theme.border.radius};
+  `}
+`
+
+export const Add = styled.div`
+  ${({ theme }) => css`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    height: 2.4rem;
+    width: 2.4rem;
+
+    background: #e6eef5;
+    border-radius: 50%;
+
+    cursor: pointer;
+
+    &:hover {
+      background-color: ${darken(0.1, '#e6eef5')};
+      transition: ${theme.transition.fast};
+    }
   `}
 `
