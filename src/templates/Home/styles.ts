@@ -1,5 +1,6 @@
 import styled, { css } from 'styled-components'
 import media from 'styled-media-query'
+import { lighten } from 'polished'
 
 import * as CardStyles from 'components/Card/styles'
 
@@ -33,7 +34,7 @@ export const Board = styled.div`
     width: 100%;
     max-width: ${theme.grid.container};
 
-    height: 80%;
+    height: 100%;
     margin: 0 auto;
     background: ${theme.colors.white};
     border-radius: ${theme.border.radius};
@@ -51,5 +52,30 @@ export const Board = styled.div`
     ${media.greaterThan('medium')`
       grid-template-columsn: repeat(3, minmax(30rem, 1fr));
     `}
+  `}
+`
+
+export const DroppableArea = styled.div`
+  ${({ theme }) => css`
+    height: 100%;
+    overflow-y: auto;
+    padding: 0 ${theme.spacings.xsmall};
+
+    &::-webkit-scrollbar {
+      width: 0.8rem;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      border-radius: ${theme.border.radius};
+      background: ${lighten(0.2, theme.colors.gray)};
+
+      &:hover {
+        background: ${theme.colors.gray};
+      }
+    }
   `}
 `

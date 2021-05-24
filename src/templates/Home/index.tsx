@@ -1,12 +1,20 @@
-import dynamic from 'next/dynamic'
-import { useState } from 'react'
+import { useRef, useState } from 'react'
+import { v4 } from 'uuid'
+import {
+  DragDropContext,
+  DropResult,
+  Draggable,
+  DraggableProvided,
+  Droppable,
+  DroppableProvided
+} from 'react-beautiful-dnd'
 
-import { DragDropContext, DropResult } from 'react-beautiful-dnd'
-
-const Column = dynamic(import('components/Column'))
-const Card = dynamic(import('components/Card'))
+import Modal from 'components/Modal'
+import Card, { CardProps } from 'components/Card'
+import FormAddCard from 'components/FormAddCard'
 
 import * as S from './styles'
+import Column from 'components/Column'
 
 const columns = [
   {
@@ -14,9 +22,9 @@ const columns = [
     title: 'To do',
     tasks: [
       {
-        id: 0,
+        id: '1',
         date: 'Due Aug 31',
-        title: 'Amending Noxious Weed Seed RuleX',
+        title: 'Amending Noxious Weed Seed Rules',
         type: 'T',
         tag: 'Needs review',
         responsible: {
@@ -25,9 +33,9 @@ const columns = [
         }
       },
       {
-        id: 1,
+        id: '2',
         date: 'Due Aug 31',
-        title: 'Amending Noxious Weed Seed RuleS',
+        title: 'Amending Noxious Weed Seed Rule',
         type: 'T',
         tag: 'EMBAIXO',
         responsible: {
@@ -36,9 +44,9 @@ const columns = [
         }
       },
       {
-        id: 4,
+        id: '3',
         date: 'Due Aug 31',
-        title: 'Amending Noxious Weed Seed <Rule2></Rule2>S',
+        title: 'Amending Noxious Weed Seed Rule',
         type: 'T',
         tag: 'EMBAIXO',
         responsible: {
@@ -53,9 +61,9 @@ const columns = [
     title: 'In progress',
     tasks: [
       {
-        id: 2,
+        id: '4',
         date: 'Due Aug 31',
-        title: 'Amending Noxious Weed Seed RuleT',
+        title: 'Amending Noxious Weed Seed Rule',
         type: 'T',
         tag: 'Needs review',
         responsible: {
@@ -70,9 +78,9 @@ const columns = [
     title: 'Validation',
     tasks: [
       {
-        id: 3,
+        id: '5',
         date: 'Due Aug 31',
-        title: 'Amending Noxious Weed Seed RuleV',
+        title: 'Amending Noxious Weed Seed Rule',
         type: 'T',
         tag: 'Needs review',
         responsible: {
@@ -84,8 +92,90 @@ const columns = [
   }
 ]
 
+export type DataProps = {
+  id: string
+  title: string
+  tasks: Array<CardProps & { id: string }>
+}
+
+type DataColumnProps = Array<DataProps>
+
 const Home = () => {
-  const [data, setData] = useState(columns)
+  const [data, setData] = useState<DataColumnProps>(columns)
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [columnId, setColumnId] = useState<string | undefined>(undefined)
+  const formRef = useRef<HTMLFormElement>(null)
+
+  const getColumn = () => {
+    return data.filter((column) => column.id === columnId)[0]
+  }
+
+  const replaceColumn = (columnToReplace: string, newColumn: DataProps) => {
+    const columnToReplaceIndex = data.map((d) => d.id).indexOf(columnToReplace)
+
+    const newData = data
+
+    newData.splice(columnToReplaceIndex, 1, newColumn)
+
+    return newData
+  }
+
+  const replaceColumns = (columns: Array<any>) => {
+    const newData = data
+
+    columns.forEach((column) => {
+      const columnToReplaceIndex = data.map((d) => d.id).indexOf(column.id)
+
+      if (columnToReplaceIndex < 0) {
+        return
+      }
+
+      newData.splice(columnToReplaceIndex, 1, column.column)
+    })
+
+    return newData
+  }
+
+  const handleConfirmModal = () => {
+    if (formRef.current) {
+      formRef.current.submitForm()
+    }
+  }
+
+  const handleAddCard = (id: string) => {
+    setColumnId(id)
+    setIsModalOpen(true)
+  }
+
+  const handleSubmitFormAddCard = (datan: any) => {
+    const newTask = {
+      id: v4(),
+      date: 'Due Aug 31',
+      title: datan.title,
+      type: 'T',
+      tag: datan.author,
+      responsible: {
+        img: '/img/icon-192.png',
+        name: 'Nome da pessoa'
+      }
+    }
+
+    const selectedColumn = getColumn()
+    const newTasks = [...selectedColumn.tasks, newTask]
+
+    const newColumn = {
+      ...selectedColumn,
+      tasks: newTasks
+    }
+
+    const newData = replaceColumn(selectedColumn.id, newColumn)
+
+    if (newData) {
+      setData([...newData])
+    }
+
+    setIsModalOpen(false)
+  }
 
   const onDragEnd = (result: DropResult) => {
     const { destination, source } = result
@@ -120,15 +210,11 @@ const Home = () => {
         tasks: newTasksIds
       }
 
-      const columnToReplaceIndex = data
-        .map((d) => d.id)
-        .indexOf(sourceColumn[0].id)
+      const newData = replaceColumn(sourceColumn[0].id, newColumn)
 
-      const newData = data
-
-      newData.splice(columnToReplaceIndex, 1, newColumn)
-
-      setData([...newData])
+      if (newData) {
+        setData([...newData])
+      }
       return
     }
 
@@ -139,59 +225,80 @@ const Home = () => {
 
     destinationNewTasksIds.splice(destination.index, 0, itemChanged)
 
-    const newSourceColumn = {
+    const newColumnSource = {
       ...sourceColumn[0],
       tasks: sourceNewTasksIds
     }
 
-    const newDestinationColumn = {
+    const newColumnDestination = {
       ...destinationColumn[0],
       tasks: destinationNewTasksIds
     }
 
-    const sourceColumnToReplaceIndex = data
-      .map((d) => d.id)
-      .indexOf(sourceColumn[0].id)
+    const cols = [
+      {
+        id: sourceColumn[0].id,
+        column: newColumnSource
+      },
+      {
+        id: destinationColumn[0].id,
+        column: newColumnDestination
+      }
+    ]
 
-    const destinationColumnToReplaceIndex = data
-      .map((d) => d.id)
-      .indexOf(destinationColumn[0].id)
+    const newData = replaceColumns(cols)
 
-    const newData = data
-
-    newData.splice(sourceColumnToReplaceIndex, 1, newSourceColumn)
-    newData.splice(destinationColumnToReplaceIndex, 1, newDestinationColumn)
-
-    console.log(newData)
-
-    setData([...newData])
+    if (newData) {
+      setData([...newData])
+    }
   }
 
   return (
     <S.Wrapper>
       <S.Board>
+        <Modal
+          title="Adicione uma nova tarefa"
+          open={isModalOpen}
+          onFailureClick={() => setIsModalOpen(false)}
+          onSuccessClick={handleConfirmModal}
+        >
+          <FormAddCard ref={formRef} handleSubmit={handleSubmitFormAddCard} />
+        </Modal>
         <DragDropContext onDragEnd={onDragEnd}>
           {data?.map((column, columnIndex) => (
             <Column
+              aria-label={`Column - ${column.title}`}
               key={column.title + columnIndex}
               title={column.title}
               id={column.id}
+              handleAdd={() => handleAddCard(column.id)}
             >
-              {column?.tasks.map((task, cardIndex) => (
-                <Card
-                  key={task.title + cardIndex}
-                  id={task.id}
-                  index={cardIndex}
-                  date={task.date}
-                  title={task.title}
-                  type={task.type}
-                  tag={task.tag}
-                  responsible={{
-                    img: task.responsible.img,
-                    name: task.responsible.name
-                  }}
-                />
-              ))}
+              <Droppable droppableId={column.id}>
+                {(provided: DroppableProvided) => (
+                  <S.DroppableArea
+                    ref={provided.innerRef}
+                    {...provided.droppableProps}
+                  >
+                    {column?.tasks.map((task, cardIndex) => (
+                      <Draggable
+                        key={task.id + cardIndex}
+                        draggableId={task.id}
+                        index={cardIndex}
+                      >
+                        {(provided: DraggableProvided) => (
+                          <Card
+                            draggableProps={provided.draggableProps}
+                            dragHandleProps={provided.dragHandleProps}
+                            {...task}
+                            ref={provided.innerRef}
+                          />
+                        )}
+                      </Draggable>
+                    ))}
+                    {provided.placeholder}
+                  </S.DroppableArea>
+                )}
+              </Droppable>
             </Column>
           ))}
         </DragDropContext>
