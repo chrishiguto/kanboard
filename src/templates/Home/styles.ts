@@ -5,22 +5,14 @@ import { lighten } from 'polished'
 import * as CardStyles from 'components/Card/styles'
 
 export const Wrapper = styled.main`
-  ${({ theme }) => css`
-    width: 100%;
-    height: 100%;
+  width: 100%;
+  height: 100%;
 
-    background-image: url('/img/background.jpg');
-    background-size: cover;
-    background-position: center center;
-
-    padding: ${theme.spacings.small};
-
-    * {
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-  `}
+  * {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
 `
 export const Board = styled.div`
   ${({ theme }) => css`
@@ -29,15 +21,11 @@ export const Board = styled.div`
     grid-gap: ${theme.grid.gutter};
     grid-template-columns: repeat(3, 1fr);
 
-    z-index: 999;
-
     width: 100%;
-    max-width: ${theme.grid.container};
 
     height: 100%;
     margin: 0 auto;
-    background: ${theme.colors.white};
-    border-radius: ${theme.border.radius};
+    background: ${theme.colors.mainBg};
 
     padding: ${theme.spacings.medium};
 

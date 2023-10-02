@@ -1,5 +1,5 @@
 import styled, { css } from 'styled-components'
-import { darken, lighten } from 'polished'
+import { darken } from 'polished'
 
 export const Wrapper = styled.button`
   ${({ theme }) => css`
@@ -8,17 +8,15 @@ export const Wrapper = styled.button`
 
     padding: ${theme.spacings.xxsmall} ${theme.spacings.xsmall};
     border-radius: ${theme.border.radius};
-    border: 0.2rem solid ${theme.colors.primary};
-    background: transparent;
+    background: ${theme.colors.darkGray};
 
     font-size: ${theme.font.sizes.small};
-    color: ${theme.colors.darkGray};
+    color: ${theme.colors.white};
     cursor: pointer;
     transition: ${theme.transition.fast};
 
     &:hover {
-      border-color: ${darken(0.2, theme.colors.primary)};
-      color: ${theme.colors.black};
+      background-color: ${darken(0.2, theme.colors.darkGray)};
     }
   `}
 `

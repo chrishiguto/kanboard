@@ -22,15 +22,14 @@ export const Title = styled.h3`
     font-size: ${theme.font.sizes.small};
     font-weight: ${theme.font.normal};
     text-transform: uppercase;
-    color: #707990;
+    color: ${theme.colors.white};
   `}
 `
 
 export const Content = styled.div`
   ${({ theme }) => css`
-    background: #e6eef5;
+    background-color: ${theme.colors.lightBg};
     flex: 1;
-
     border-radius: ${theme.border.radius};
   `}
 `
@@ -44,13 +43,13 @@ export const Add = styled.div`
     height: 2.4rem;
     width: 2.4rem;
 
-    background: #e6eef5;
+    background: ${theme.colors.white};
     border-radius: 50%;
 
     cursor: pointer;
 
     &:hover {
-      background-color: ${darken(0.1, '#e6eef5')};
+      background-color: ${darken(0.1, theme.colors.white)};
       transition: ${theme.transition.fast};
     }
   `}

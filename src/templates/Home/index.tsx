@@ -23,36 +23,15 @@ const columns = [
     tasks: [
       {
         id: '1',
-        date: 'Due Aug 31',
-        title: 'Amending Noxious Weed Seed Rules',
-        type: 'T',
-        tag: 'Needs review',
-        responsible: {
-          img: '/img/icon-192.png',
-          name: 'Nome da pessoa'
-        }
+        title: 'This is the very first item!',
+        type: 'CH',
+        tag: 'Needs review'
       },
       {
         id: '2',
-        date: 'Due Aug 31',
-        title: 'Amending Noxious Weed Seed Rule',
-        type: 'T',
-        tag: 'EMBAIXO',
-        responsible: {
-          img: '/img/icon-192.png',
-          name: 'Nome da pessoa'
-        }
-      },
-      {
-        id: '3',
-        date: 'Due Aug 31',
-        title: 'Amending Noxious Weed Seed Rule',
-        type: 'T',
-        tag: 'EMBAIXO',
-        responsible: {
-          img: '/img/icon-192.png',
-          name: 'Nome da pessoa'
-        }
+        title: '[FIX] Stuff in the app',
+        type: 'CH',
+        tag: 'Release 3.0'
       }
     ]
   },
@@ -62,14 +41,9 @@ const columns = [
     tasks: [
       {
         id: '4',
-        date: 'Due Aug 31',
-        title: 'Amending Noxious Weed Seed Rule',
-        type: 'T',
-        tag: 'Needs review',
-        responsible: {
-          img: '/img/icon-192.png',
-          name: 'Nome da pessoa'
-        }
+        title: '[FEAT] New app',
+        type: 'CH',
+        tag: 'New feature'
       }
     ]
   },
@@ -79,14 +53,9 @@ const columns = [
     tasks: [
       {
         id: '5',
-        date: 'Due Aug 31',
-        title: 'Amending Noxious Weed Seed Rule',
-        type: 'T',
-        tag: 'Needs review',
-        responsible: {
-          img: '/img/icon-192.png',
-          name: 'Nome da pessoa'
-        }
+        title: 'Another one!',
+        type: 'CH',
+        tag: 'Release 3.5.0'
       }
     ]
   }
@@ -99,6 +68,11 @@ export type DataProps = {
 }
 
 type DataColumnProps = Array<DataProps>
+
+type Column = {
+  id: string
+  column: DataProps
+}
 
 const Home = () => {
   const [data, setData] = useState<DataColumnProps>(columns)
@@ -113,15 +87,15 @@ const Home = () => {
   const replaceColumn = (columnToReplace: string, newColumn: DataProps) => {
     const columnToReplaceIndex = data.map((d) => d.id).indexOf(columnToReplace)
 
-    const newData = data
+    const newData = [...data]
 
     newData.splice(columnToReplaceIndex, 1, newColumn)
 
     return newData
   }
 
-  const replaceColumns = (columns: Array<any>) => {
-    const newData = data
+  const replaceColumns = (columns: Array<Column>) => {
+    const newData = [...data]
 
     columns.forEach((column) => {
       const columnToReplaceIndex = data.map((d) => d.id).indexOf(column.id)
@@ -147,17 +121,12 @@ const Home = () => {
     setIsModalOpen(true)
   }
 
-  const handleSubmitFormAddCard = (datan: any) => {
+  const handleSubmitFormAddCard = (data: any) => {
     const newTask = {
       id: v4(),
-      date: 'Due Aug 31',
-      title: datan.title,
+      title: data.title,
       type: 'T',
-      tag: datan.author,
-      responsible: {
-        img: '/img/icon-192.png',
-        name: 'Nome da pessoa'
-      }
+      tag: data.author
     }
 
     const selectedColumn = getColumn()
@@ -213,7 +182,7 @@ const Home = () => {
       const newData = replaceColumn(sourceColumn[0].id, newColumn)
 
       if (newData) {
-        setData([...newData])
+        setData(newData)
       }
       return
     }
@@ -249,21 +218,13 @@ const Home = () => {
     const newData = replaceColumns(cols)
 
     if (newData) {
-      setData([...newData])
+      setData(newData)
     }
   }
 
   return (
     <S.Wrapper>
       <S.Board>
-        <Modal
-          title="Adicione uma nova tarefa"
-          open={isModalOpen}
-          onFailureClick={() => setIsModalOpen(false)}
-          onSuccessClick={handleConfirmModal}
-        >
-          <FormAddCard ref={formRef} handleSubmit={handleSubmitFormAddCard} />
-        </Modal>
         <DragDropContext onDragEnd={onDragEnd}>
           {data?.map((column, columnIndex) => (
             <Column
@@ -303,6 +264,14 @@ const Home = () => {
           ))}
         </DragDropContext>
       </S.Board>
+      <Modal
+        title="Add a new task"
+        open={isModalOpen}
+        onFailureClick={() => setIsModalOpen(false)}
+        onSuccessClick={handleConfirmModal}
+      >
+        <FormAddCard ref={formRef} handleSubmit={handleSubmitFormAddCard} />
+      </Modal>
     </S.Wrapper>
   )
 }

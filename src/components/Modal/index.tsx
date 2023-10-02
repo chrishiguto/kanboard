@@ -18,8 +18,8 @@ const Modal = ({
   open,
   children,
   title,
-  btnFailureText = 'Cancelar',
-  btnSuccessText = 'Confirmar',
+  btnFailureText = 'Cancel',
+  btnSuccessText = 'Confirm',
   onSuccessClick,
   onFailureClick
 }: ModalProps) => (

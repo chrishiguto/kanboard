@@ -25,11 +25,11 @@ export default {
   colors: {
     primary: '#F231A5',
     secondary: '#3CD3C1',
-    mainBg: '#06092B',
-    lightBg: '#F2F2F2',
+    mainBg: '#212121',
+    lightBg: '#383838',
     white: '#FAFAFA',
     black: '#030517',
-    lightGray: '#EAEAEA',
+    lightGray: '#d9d9d9',
     gray: '#8F8F8F',
     darkGray: '#2E2F42',
     red: '#FF6347'

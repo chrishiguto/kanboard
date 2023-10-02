@@ -20,10 +20,5 @@ export const Default: Story<CardProps> = (args) => (
 Default.args = {
   tag: 'Needs review',
   type: 'T',
-  title: 'Amending Noxious Weed Seed Rule',
-  date: 'Due Aug 31',
-  responsible: {
-    img: '/img/icon-192.png',
-    name: 'Person name'
-  }
+  title: 'Amending Noxious Weed Seed Rule'
 }

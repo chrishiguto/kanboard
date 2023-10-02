@@ -1,8 +1,9 @@
 import styled, { css } from 'styled-components'
+import { darken, lighten } from 'polished'
 
 export const Wrapper = styled.div`
   ${({ theme }) => css`
-    background: ${theme.colors.white};
+    background-color: ${theme.colors.mainBg};
     border-radius: ${theme.border.radius};
     padding: ${theme.spacings.xsmall};
   `}
@@ -41,14 +42,14 @@ export const Tag = styled.span`
   ${({ theme }) => css`
     display: inline-flex;
 
-    padding: calc(${theme.spacings.xsmall} / 4);
+    padding: calc(${theme.spacings.xxsmall} / 1.5);
     border-radius: calc(${theme.border.radius} / 2);
 
     text-transform: uppercase;
-    font-weight: ${theme.font.bold};
     font-size: calc(${theme.font.sizes.medium} - 0.5rem);
-    color: #fa6e88;
-    background: #fef1f5;
+    color: ${lighten(0.3, theme.colors.mainBg)};
+    border: 1px solid ${lighten(0.2, theme.colors.mainBg)};
+    background-color: ${theme.colors.mainBg};
   `}
 `
 
@@ -63,6 +64,7 @@ export const Type = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
+    color: ${theme.colors.white};
 
     height: 2.4rem;
     width: 2.4rem;
@@ -70,17 +72,17 @@ export const Type = styled.div`
     padding: calc(${theme.spacings.xsmall} / 4)
       calc(${theme.spacings.xsmall} / 2);
     border-radius: calc(${theme.border.radius} / 2);
-    background: #ebeef3;
+    background-color: ${darken(0.1, theme.colors.gray)};
   `}
 `
 
 export const Title = styled.h3`
   ${({ theme }) => css`
-    color: #707990;
-
+    color: ${theme.colors.white};
+    margin-top: ${theme.spacings.xxsmall};
     font-weight: ${theme.font.bold};
     line-height: 2.4rem;
-    font-size: ${theme.font.sizes.xsmall};
+    font-size: ${theme.font.sizes.medium};
   `}
 `
 

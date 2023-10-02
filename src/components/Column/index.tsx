@@ -2,6 +2,7 @@ import { Droppable, DroppableProvided } from 'react-beautiful-dnd'
 import { Plus } from '@styled-icons/feather'
 
 import * as S from './styles'
+import theme from 'styles/theme'
 
 export type ColumnProps = {
   id: string
@@ -17,10 +18,10 @@ const Column = ({ children, title, id, handleAdd, ...props }: ColumnProps) => (
         <S.Title>{title}</S.Title>
         <S.Add
           role="button"
-          onClick={handleAdd}
+          onClick={() => handleAdd(id)}
           aria-label={`Add card to column ${title}`}
         >
-          <Plus size={12} />
+          <Plus color={theme.colors.darkGray} size={12} />
         </S.Add>
       </S.Header>
     )}
