@@ -1,6 +1,9 @@
 
 ### Kanboard
 
+![Screenshot 2023-10-02 at 19 23 45](https://github.com/chrishiguto/kanboard/assets/14095527/29ac4895-9297-43fe-abf2-69a2224b089e)
+
+
 This is a very simple project created to play around with [React Beautiful DnD](https://github.com/atlassian/react-beautiful-dnd). I'm also using a deprecated form library called [Unforms](https://github.com/unform/unform) which was a promising library at the time.
 This project was bootstrapped using [Advanced React Boilerplate](https://github.com/React-Avancado/boilerplate)
 
